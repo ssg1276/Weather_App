@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
     <title>Weather-App</title>
     <link rel="stylesheet" href="weather.css">
 </head>
@@ -34,7 +38,7 @@
             </form>
 
             <!-- Loading Screen Container -->
-            <div class="loading-container">
+            <div class="sub-container loading-container">
                 <img src="./img/loading.gif" alt="" width="150" height="150">
                 <p>Loading</p>
 
@@ -42,7 +46,7 @@
 
             <!-- Last Container weather info -->
 
-            <div class="user-info-container">
+            <div class="sub-container user-info-container">
                 <div class="name">
                     <p data-cityName></p>
                     <img data-countryIcon alt="">
@@ -55,17 +59,17 @@
 
                 <!-- CArds container -->
                 <div class="cards">
-                    <div class="card1">
+                    <div class="parameter card1">
                         <img src="./img/wind.png" alt="">
-                        <p>Wind Speed</p>
+                        <p>WindSpeed</p>
                         <p data-windspeed></p>
                     </div>
-                    <div class="card2">
+                    <div class="parameter card2">
                         <img src="./img/humidity.png" alt="">
                         <p>Humidity</p>
                         <p data-humidity></p>
                     </div>
-                    <div class="card3">
+                    <div class="parameter card3">
                         <img src="./img/cloud.png" alt="">
                         <p>Clouds</p>
                         <p data-cloud></p>
