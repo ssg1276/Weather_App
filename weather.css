@@ -274,17 +274,33 @@ h1 {
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
+    .tap-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tab1,
+    .tab2 {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .wrapper {
+        width: 100vw;
+        height: 150vh;
+        color: var(--colorLight2);
+        background-image: url("img/rain.gif");
+        background-size: cover;
+        background-position: center;
+        /* Center the background image */
+        background-repeat: no-repeat;
+    }
 
     .cards {
+        width: 100%;
         display: flex;
         flex-direction: column;
     }
-
-    .wrapper {
-        height: 100vh;
-        width: 100vw;
-
-    }
-
 }
