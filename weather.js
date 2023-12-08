@@ -3,7 +3,7 @@
 const userTab = document.querySelector(".tab1");
 const searchTab = document.querySelector(".tab2");
 const userContainer = document.querySelector(".main-container");
-
+const notFound = document.querySelector(".error");
 const grantAccessContainer = document.querySelector(".grant");
 const searchForm = document.querySelector(".form-container");
 const loadngScreen = document.querySelector(".loading-container");
@@ -27,11 +27,13 @@ function switchTab(clickedTab) {
         if (!searchForm.classList.contains("active")) {
             userInfoContainer.classList.remove("active");
             grantAccessContainer.classList.remove("active");
+            notFound.classList.remove("active");
             searchForm.classList.add("active");
         }
         else {
             searchForm.classList.remove("active");
             userInfoContainer.classList.remove("active");
+            notFound.classList.remove("active");
             getfromSessionStorage();
 
         }
@@ -63,18 +65,36 @@ async function fetchUserWeatherInfo(coordinates) {
     grantAccessContainer.classList.remove("active");
     //make loader visible
     loadngScreen.classList.add("active");
+    notFound.classList.remove("active");
 
     //API call
     try {
-        const respone = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
-        const data = await respone.json();
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`);
+        console.log(response);
+        const data = await response.json();
+        console.log(data);
+        if (response.ok) {
+            // If the response is successful, update the UI
+            loadngScreen.classList.remove("active");
+            userInfoContainer.classList.add("active");
 
-        loadngScreen.classList.remove("active");
-        userInfoContainer.classList.add("active");
-        renderWeatherInfo(data);
-    }
-    catch (err) {
+            renderWeatherInfo(data);
+        } else {
+            // If the response is not successful, handle the error
+            throw { cod: response.status, message: data.message || "City not found" };
+        }
+    } catch (error) {
+        // console.error("Error fetching weather data:", error);
 
+        if (error?.cod === 404) {
+            userInfoContainer.classList.remove("active");
+            grantAccessContainer.classList.remove("active");
+            loadngScreen.classList.remove("active");
+            notFound.classList.add("active");
+        }
+
+        const ntf = document.querySelector(".notfound");
+        ntf.innerText = `${error?.message || "An unexpected error occurred"}`;
     }
 }
 
@@ -122,6 +142,8 @@ function showPosition(position) {
 const grantAccessButton = document.querySelector("[grant-button]");
 grantAccessButton.addEventListener("click", getLocation);
 
+const loadBtn = document.querySelector("[load-btn]");
+const resetBtn = document.querySelector("[reset-btn]");
 let searchInput = document.querySelector("[data-searchInput]");
 searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -131,7 +153,10 @@ searchForm.addEventListener("submit", (e) => {
         fetchSearchWeatherInfo(cityName);
 
 });
-
+resetBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    searchForm.classList.add("active");
+})
 async function fetchSearchWeatherInfo(city) {
     loadngScreen.classList.add("active");
     userInfoContainer.classList.remove("active");
@@ -139,13 +164,30 @@ async function fetchSearchWeatherInfo(city) {
 
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
+        console.log(response);
         const data = await response.json();
-        loadngScreen.classList.remove("active");
-        userInfoContainer.classList.add("active");
-        renderWeatherInfo(data);
-    }
-    catch (err) {
+        console.log(data);
+        if (response.ok) {
+            // If the response is successful, update the UI
+            loadngScreen.classList.remove("active");
+            userInfoContainer.classList.add("active");
+            renderWeatherInfo(data);
+        } else {
+            // If the response is not successful, handle the error
+            throw { cod: response.status, message: data.message };
+        }
+    } catch (error) {
+        // console.error("Error fetching weather data:", error);
 
+        if (error?.cod === 404) {
+            userInfoContainer.classList.remove("active");
+            grantAccessContainer.classList.remove("active");
+            loadngScreen.classList.remove("active");
+            notFound.classList.add("active");
+        }
+
+        const ntf = document.querySelector(".notfound");
+        ntf.innerText = `${error?.message || "An unexpected error occurred"}`;
     }
 }
 

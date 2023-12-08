@@ -32,11 +32,18 @@
             <!-- Serach form -->
             <form class="form-container">
                 <input placeholder="Search For City..." data-searchInput>
-                <button class="btn2" type="submit">
+                <button class="btn2" type="submit" search-btn>
                     <img src="./img/search.png" alt="" width="20" height="20" loading="lazy">
                 </button>
-            </form>
+                <button class="btn2" type="submit" reset-btn>
+                    <img src="./img/rotate-right-solid.svg" alt="" width="20" height="20" loading="lazy">
+                </button>
 
+            </form>
+            <div class="error">
+                <img src="img/not-found.png" alt="">
+                <p class="notfound"></p>
+            </div>
             <!-- Loading Screen Container -->
             <div class="sub-container loading-container">
                 <img src="./img/loading.gif" alt="" width="150" height="150">

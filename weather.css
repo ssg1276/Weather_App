@@ -18,8 +18,9 @@
     width: 100vw;
     height: 100vh;
     color: var(--colorLight2);
-    background-image: linear-gradient(160deg, #112d4e 0%, #3f72af 100%);
-    ;
+    background-image: url("img/rain.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 h1 {
@@ -247,4 +248,43 @@ h1 {
     margin-bottom: 1px;
     background-color: #3F72AF;
     cursor: pointer;
+}
+
+.error {
+    display: none;
+}
+
+.error.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.error img {
+    height: 300px;
+    width: 300px;
+}
+
+.error p {
+    text-align: center;
+    font-size: x-large;
+    font-weight: 800;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+    .cards {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wrapper {
+        height: 100vh;
+        width: 100vw;
+
+    }
+
 }
